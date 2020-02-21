@@ -1,17 +1,24 @@
 {
   "name": "nodejs",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "NodeJs training",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "task1-1": "nodemon ./tasks/app.js",
+    "build": "babel tasks -d dist",
+    "task1-1": "nodemon ./tasks/app1-1.js",
     "task1-2": "nodemon ./tasks/app1-2.js",
+    "task1-3": "nodemon --exec babel-node ./tasks/app1-3.js",
+    "task1-1b": "npm run build && nodemon ./dist/app1-1.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.2",
-    "csvtojson": "^2.0.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "csvtojson": "^2.0.0",
+    "nodemon": "^2.0.2"
   }
 }
