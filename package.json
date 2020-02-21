@@ -12,6 +12,6 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.2",
-    "csvtojson": "2.0.0"
+    "csvtojson": "^2.0.0"
   }
 }
