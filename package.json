@@ -4,12 +4,14 @@
   "description": "NodeJs training",
   "main": "index.js",
   "scripts": {
-    "task1": "nodemon ./tasks/app.js",
+    "task1-1": "nodemon ./tasks/app.js",
+    "task1-2": "nodemon ./tasks/app1-2.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "csvtojson": "^2.0.0"
   }
 }
