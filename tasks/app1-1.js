@@ -1,10 +1,10 @@
-const endOfLine = require('os').EOL;
+const EOL = require('os').EOL;
 process.stdin.setEncoding('utf8');
 
 function readWriteHandler() {
     let initialInput;
     while ((initialInput = process.stdin.read()) !== null) {
-      process.stdout.write(`${reverseString(initialInput) + endOfLine}`);
+      process.stdout.write(`${reverseString(initialInput) + EOL}`);
     }
 }
 
