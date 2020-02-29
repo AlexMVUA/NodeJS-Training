@@ -11,6 +11,7 @@
     "task1-1b": "npm run build && nodemon ./dist/app1-1.js",
     "task2-1": "nodemon --inspect ./tasks/app2-1.js",
     "task2-1b": "npm run build && nodemon --inspect ./dist/app2-1.js",
+    "task2-2": "nodemon --inspect ./tasks/app2-2.js",
     "checkDist": "npm run build && eslint dist/** -c dist/.eslintrc",
     "check": "eslint tasks/**",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,9 +28,13 @@
     "eslint": "^6.8.0",
     "eslint-plugin-node": "^11.0.0",
     "express": "^4.17.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "@hapi/joi": "^17.1.0",
+    "express-joi-validation": "^4.0.3"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "express-joi-validation": "^4.0.3",
     "uuid": "^7.0.1"
   }
 }
