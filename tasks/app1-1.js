@@ -3,8 +3,10 @@ process.stdin.setEncoding('utf8');
 
 function readWriteHandler() {
     let initialInput;
-    while ((initialInput = process.stdin.read()) !== null) {
-      process.stdout.write(`${reverseString(initialInput) + EOL}`);
+    initialInput = process.stdin.read();
+    while (initialInput !== null) {
+        process.stdout.write(`${reverseString(initialInput) + EOL}`);
+        initialInput = process.stdin.read();
     }
 }
 
@@ -17,6 +19,6 @@ function endEventHandler() {
 process.stdin.on('end', endEventHandler);
 
 function reverseString(string) {
-  const reversedString = string.trim().split('').reverse();
-  return reversedString.join('');
+    const reversedString = string.trim().split('').reverse();
+    return reversedString.join('');
 }
