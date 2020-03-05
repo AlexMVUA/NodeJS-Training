@@ -12,7 +12,6 @@
     "task1-1b": "npm run build && nodemon ./dist/app1-1.js",
     "task2-1": "nodemon --experimental-modules --inspect ./tasks/app2-1.js",
     "task2-1b": "npm run build && nodemon --inspect ./dist/app2-1.js",
-    "task2-2": "nodemon --inspect ./tasks/app2-2.js",
     "checkDist": "npm run build && eslint dist/** -c dist/.eslintrc",
     "check": "eslint tasks/**",
     "test": "echo \"Error: no test specified\" && exit 1"
