@@ -1,14 +1,15 @@
-import csv from "csvtojson/v2";
+import helper from 'csvtojson/v2/index.js';
 import fs from 'fs';
-import {pipeline} from 'stream';
+import { pipeline } from 'stream';
 
+const csv = helper.csv;
 const csvFilePath = './csv/nodejs-hw1-ex1.csv';
 const outputTxtFile = './output/new_file3.txt';
 
 const csvConfiguration = {
     colParser: {
-        "amount": "omit",
-        "price": "number",
+        'amount': 'omit',
+        'price': 'number'
     },
     headers: ['book', 'author', 'amount', 'price']
 };

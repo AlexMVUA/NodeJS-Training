@@ -1,13 +1,13 @@
-const csv = require("csvtojson/v2");
+const csv = require('csvtojson/v2');
 const csvFilePath = './csv/nodejs-hw1-ex1.csv';
 const outputTxtFile = './output/new_file2.txt';
 const fs = require('fs');
-const {pipeline} = require('stream');
+const { pipeline } = require('stream');
 
 const csvConfiguration = {
     colParser: {
-        "amount": "omit",
-        "price": "number",
+        'amount': 'omit',
+        'price': 'number'
     },
     headers: ['book', 'author', 'amount', 'price']
 };
