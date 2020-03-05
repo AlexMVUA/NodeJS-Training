@@ -1,32 +1,19 @@
-const express = require('express');
-const uuid = require('uuid');
+import express  from 'express';
+import { getLimit } from '../utils/util.js';
+import { User } from '../models/user.js';
+import { populateTestData } from '../models/user.js';
+import { storage } from '../models/user.js';
 
-const router = express.Router();
+import { isUserExist } from '../models/user.js';
+import { getFilteredUsers } from '../models/user.js';
 
-const userStorage = new Map();
+export const router = express.Router();
 
-function User(login, password, age, uid = uuid.v4()) {
-    this.id = uid;
-    this.login = login;
-    this.password = password;
-    this.age = age;
-    this.isDeleted = false;
-}
-
-const defaultUser = new User('default', 'password', 25, '1');
-const secondUser = new User('secondUser', 'password', 14, '2');
-const thirdUser = new User('thirdUser', 'password', 38, '3');
-userStorage.set(defaultUser.id, defaultUser);
-userStorage.set(secondUser.id, secondUser);
-userStorage.set(thirdUser.id, thirdUser);
-
-function isUserExist(request) {
-    return userStorage.has(request.params.id);
-}
+populateTestData(storage);
 
 router.get('/user/:id', (request, response) => {
-    if (isUserExist(request)) {
-        response.status(200).send(userStorage.get(request.params.id));
+    if (isUserExist(request.params.id)) {
+        response.status(200).send(storage.get(request.params.id));
     } else {
         response.status(404).send({ message: 'User not found' });
     }
@@ -35,16 +22,16 @@ router.get('/user/:id', (request, response) => {
 router.post('/user/', (request, response) => {
     const user = request.body;
     const createdUser = new User(user.login, user.password, user.age);
-    userStorage.set(createdUser.id, createdUser);
+    storage.set(createdUser.id, createdUser);
     response.status(201).send({ id: createdUser.id });
 });
 
 router.put('/user/', (request, response) => {
     const { age, id, login, password } = request.body;
     let updatedUser;
-    if (isUserExist(request)) {
+    if (isUserExist(id)) {
         updatedUser = new User(login, password, age, id);
-        userStorage.set(updatedUser.id, updatedUser);
+        storage.set(updatedUser.id, updatedUser);
         response.status(200).send({ id: updatedUser.id });
     } else {
         response.status(404).send({ id: 'user not found' });
@@ -52,19 +39,13 @@ router.put('/user/', (request, response) => {
 });
 
 router.delete('/user/:id', (request, response) => {
-    if (isUserExist(request)) {
-        userStorage.get(request.params.id).isDeleted = true;
+    if (isUserExist(request.params.id)) {
+        storage.get(request.params.id).isDeleted = true;
         response.status(200).send({ result: 'removed successful' });
     } else {
         response.status(204).send({ id: 'user not found' });
     }
 });
-
-function getFilteredUsers(loginSubstring, limit) {
-    const filteredUsers = Array.from(userStorage.values())
-        .filter(user => byLoginSubString(user, loginSubstring));
-    return filteredUsers.splice(0, limit);
-}
 
 router.get('/getAutoSuggestUsers', (request, response) => {
     const { limit, loginSubstring } = request.query;
@@ -74,16 +55,3 @@ router.get('/getAutoSuggestUsers', (request, response) => {
         response.status(204).send({});
     }
 });
-
-function getLimit(limit) {
-    if (isNaN(limit)) {
-        return 0;
-    }
-    return limit;
-}
-
-function byLoginSubString(user, loginSubstring) {
-    return user.login.toLowerCase().indexOf(loginSubstring.toLowerCase()) !== -1;
-}
-
-module.exports = router;
