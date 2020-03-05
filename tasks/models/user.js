@@ -12,9 +12,9 @@ export function User(login, password, age, uid = uuid.v4()) {
 }
 
 export function populateTestData(map) {
-    const defaultUser = new User('default', 'password', 25, '1');
-    const secondUser = new User('secondUser', 'password', 14, '2');
-    const thirdUser = new User('thirdUser', 'password', 38, '3');
+    const defaultUser = new User('default', 'password', 25, '11');
+    const secondUser = new User('secondUser', 'password', 14, '22');
+    const thirdUser = new User('thirdUser', 'password', 38, '33');
     map.set(defaultUser.id, defaultUser);
     map.set(secondUser.id, secondUser);
     map.set(thirdUser.id, thirdUser);

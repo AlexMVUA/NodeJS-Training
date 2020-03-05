@@ -1,57 +1,22 @@
-import express  from 'express';
-import { getLimit } from '../utils/util.js';
-import { User } from '../models/user.js';
+import express from 'express';
 import { populateTestData } from '../models/user.js';
 import { storage } from '../models/user.js';
+import { schemas } from '../schemas/user.js';
+import { Controller } from '../controllers/user.js';
+import validation from 'express-joi-validation';
 
-import { isUserExist } from '../models/user.js';
-import { getFilteredUsers } from '../models/user.js';
+const validator = validation.createValidator({ allowUnknown: false });
 
 export const router = express.Router();
 
 populateTestData(storage);
 
-router.get('/user/:id', (request, response) => {
-    if (isUserExist(request.params.id)) {
-        response.status(200).send(storage.get(request.params.id));
-    } else {
-        response.status(404).send({ message: 'User not found' });
-    }
-});
+router.get('/user/:id', validator.params(schemas.user.get), (request, response) => Controller.user.get(request, response));
 
-router.post('/user/', (request, response) => {
-    const user = request.body;
-    const createdUser = new User(user.login, user.password, user.age);
-    storage.set(createdUser.id, createdUser);
-    response.status(201).send({ id: createdUser.id });
-});
+router.post('/user/', validator.body(schemas.user.update), (request, response) => Controller.user.create(request, response));
 
-router.put('/user/', (request, response) => {
-    const { age, id, login, password } = request.body;
-    let updatedUser;
-    if (isUserExist(id)) {
-        updatedUser = new User(login, password, age, id);
-        storage.set(updatedUser.id, updatedUser);
-        response.status(200).send({ id: updatedUser.id });
-    } else {
-        response.status(404).send({ id: 'user not found' });
-    }
-});
+router.put('/user/:id', validator.params(schemas.user.get), validator.body(schemas.user.update), (request, response) => Controller.user.update(request, response));
 
-router.delete('/user/:id', (request, response) => {
-    if (isUserExist(request.params.id)) {
-        storage.get(request.params.id).isDeleted = true;
-        response.status(200).send({ result: 'removed successful' });
-    } else {
-        response.status(204).send({ id: 'user not found' });
-    }
-});
+router.delete('/user/:id', validator.params(schemas.user.delete), (request, response) => Controller.user.delete(request, response));
 
-router.get('/getAutoSuggestUsers', (request, response) => {
-    const { limit, loginSubstring } = request.query;
-    if (loginSubstring && getLimit(limit) > 0) {
-        response.status(200).send(JSON.stringify(getFilteredUsers(loginSubstring, limit)));
-    } else {
-        response.status(204).send({});
-    }
-});
+router.get('/getAutoSuggestUsers', (request, response) => Controller.user.getAutoSuggestedUsers(request, response));
