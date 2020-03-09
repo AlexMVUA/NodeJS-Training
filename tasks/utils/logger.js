@@ -1,7 +1,7 @@
 import winston from 'winston';
 import expressWinston from 'express-winston';
 
-export const logger = expressWinston.logger({
+const loggerOptions = {
     transports: [
         new winston.transports.Console()
     ],
@@ -10,14 +10,17 @@ export const logger = expressWinston.logger({
     msg: 'HTTP {{req.method}} {{req.url}} {{res.responseTime}}ms',
     expressFormat: false,
     colorize: false
-});
+};
+export const logger = expressWinston.logger(loggerOptions);
 
-export const errorLogger = expressWinston.errorLogger({
+const errorLoggerOptions = {
     transports: [
         new winston.transports.Console()
     ],
-    format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.json()
-    )
-});
+    format: winston.format.json(),
+    meta: false,
+    msg: '{{req.status || 500}} - {{err.message}} - {{req.originalUrl}} - {{req.method}}',
+    expressFormat: false,
+    colorize: false
+};
+export const errorLogger = expressWinston.errorLogger(errorLoggerOptions);
