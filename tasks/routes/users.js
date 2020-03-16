@@ -11,12 +11,14 @@ export const router = express.Router();
 
 populateTestData(storage);
 
-router.get('/user/:id', validator.params(schemas.user.get), (request, response) => Controller.user.get(request, response));
+router.get('/user/:id', Controller.user.checkToken, validator.params(schemas.user.get), (request, response) => Controller.user.get(request, response));
 
-router.post('/user/', validator.body(schemas.user.update), (request, response) => Controller.user.create(request, response));
+router.post('/user/', Controller.user.checkToken, validator.body(schemas.user.update), (request, response) => Controller.user.create(request, response));
 
-router.put('/user/:id', validator.params(schemas.user.get), validator.body(schemas.user.update), (request, response) => Controller.user.update(request, response));
+router.put('/user/:id', Controller.user.checkToken, validator.params(schemas.user.get), validator.body(schemas.user.update), (request, response) => Controller.user.update(request, response));
 
-router.delete('/user/:id', validator.params(schemas.user.delete), (request, response) => Controller.user.delete(request, response));
+router.delete('/user/:id', Controller.user.checkToken, validator.params(schemas.user.delete), (request, response) => Controller.user.delete(request, response));
 
-router.get('/getAutoSuggestUsers', (request, response) => Controller.user.getAutoSuggestedUsers(request, response));
+router.get('/getAutoSuggestUsers', Controller.user.checkToken, (request, response) => Controller.user.getAutoSuggestedUsers(request, response));
+
+router.post('/login', (request, response) => Controller.user.login(request, response));

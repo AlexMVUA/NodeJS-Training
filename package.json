@@ -37,6 +37,7 @@
     "@hapi/joi": "^17.1.0",
     "express-joi-validation": "^4.0.3",
     "express-winston": "^4.0.3",
+    "jsonwebtoken": "^8.5.1",
     "uuid": "^7.0.1"
   }
 }

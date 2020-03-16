@@ -1,5 +1,6 @@
-import { getFilteredUsers, isUserExist, storage, User } from '../models/user.js';
+import { getFilteredUsers, isUserExist, getUserByLogin, storage, User } from '../models/user.js';
 import { getLimit } from '../utils/util.js';
+import { Authentication } from '../utils/auth.js';
 
 const getErrorNumber = 777;
 
@@ -46,6 +47,17 @@ export const Controller = {
             } else {
                 response.status(204).send({});
             }
+        },
+        login(request, response) {
+            const user = getUserByLogin(request.body.login);
+            if (user === undefined || user.password !== request.body.password) {
+                response.status(403).send({ success: false, message: 'Bad credentials' });
+            } else {
+                Authentication.signToken(response, user);
+            }
+        },
+        checkToken(request, response, next) {
+            Authentication.verifyToken(request, response, next);
         }
     }
 };

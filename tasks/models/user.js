@@ -24,6 +24,11 @@ export function isUserExist(id) {
     return storage.has(id);
 }
 
+export function getUserByLogin(login) {
+    const userByLogin = Array.from(storage.values()).filter(user => user.login === login);
+    return userByLogin[0];
+}
+
 export function getFilteredUsers(loginSubstring, limit) {
     const filteredUsers = Array.from(storage.values())
         .filter(user => containStringIgnoreCase(user.login, loginSubstring));
