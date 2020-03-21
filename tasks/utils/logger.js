@@ -11,7 +11,7 @@ const loggerOptions = {
     expressFormat: false,
     colorize: false
 };
-export const logger = expressWinston.logger(loggerOptions);
+const logger = expressWinston.logger(loggerOptions);
 
 const errorLoggerOptions = {
     transports: [
@@ -23,4 +23,6 @@ const errorLoggerOptions = {
     expressFormat: false,
     colorize: false
 };
-export const errorLogger = expressWinston.errorLogger(errorLoggerOptions);
+const errorLogger = expressWinston.errorLogger(errorLoggerOptions);
+
+export { logger, errorLogger };

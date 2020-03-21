@@ -10,11 +10,11 @@ app.use(logger);
 app.use('/users/', userRouter.router);
 app.use(errorLogger);
 
-app.use((err, req, res, next) => // eslint-disable-line no-unused-vars
+app.use((err, req, res) =>
     res.status(500).send(`${err} has occurred!`)
 );
 
-process.on('uncaughtException', (err, req, res, next) => { // eslint-disable-line no-unused-vars
+process.on('uncaughtException', (err) => {
     console.error(`${new Date().toUTCString()} | uncaughtException:${err.message}`);
     process.exit(1);
 }).on('unhandledRejection', error => {
