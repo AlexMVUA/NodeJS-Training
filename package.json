@@ -35,8 +35,11 @@
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
+    "cors": "^2.8.5",
     "express-joi-validation": "^4.0.3",
     "express-winston": "^4.0.3",
+    "http-status-codes": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
     "uuid": "^7.0.1"
   }
 }
