@@ -1,11 +1,15 @@
 import { getFilteredUsers, isUserExist, storage, User } from '../models/user.js';
 import { getLimit } from '../utils/util.js';
 
+const getErrorNumber = 777;
+
 export const Controller = {
     user: {
         get(request, response) {
             if (isUserExist(request.params.id)) {
                 response.status(200).send(storage.get(request.params.id));
+            } else if (request.params.id > getErrorNumber) {
+                throw Error('unexpected error');
             } else {
                 response.status(404).send({ message: 'User not found' });
             }
