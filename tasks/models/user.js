@@ -25,8 +25,7 @@ export function isUserExist(id) {
 }
 
 export function getUserByLogin(login) {
-    const userByLogin = Array.from(storage.values()).filter(user => user.login === login);
-    return userByLogin[0];
+    return Array.from(storage.values()).find(user => user.login === login);
 }
 
 export function getFilteredUsers(loginSubstring, limit) {
