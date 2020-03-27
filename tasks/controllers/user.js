@@ -1,11 +1,24 @@
 import HttpStatus from 'http-status-codes';
 import { getFilteredUsers, isUserExist, getUserByLogin, storage, User } from '../models/user.js';
+import { getUserGroupById, isUserGroupExist, getAllGroups } from '../models/userGroup.js';
 import { getLimit } from '../utils/util.js';
 import { Authentication } from '../utils/auth.js';
 import { Constants } from '../utils/constants.js';
 
 
 export const Controller = {
+    userGroup: {
+        getAll(request, response) {
+            response.status(HttpStatus.OK).send(JSON.stringify(getAllGroups()));
+        },
+        get(request, response) {
+            if (isUserGroupExist(request.params.id)) {
+                response.status(HttpStatus.OK).send(getUserGroupById(request.params.id));
+            } else {
+                response.status(HttpStatus.NOT_FOUND).send({ message: Constants.ErrorMessages.USER_GROUP_NOT_FOUND });
+            }
+        }
+    },
     user: {
         get(request, response) {
             if (isUserExist(request.params.id)) {
