@@ -31,15 +31,19 @@ const Controller = {
         },
         create(request, response) {
             const user = request.body;
-            const createdUser = new User(user.login, user.password, user.age);
+            const createdUser = new User(user.login, user.password, user.age, user.id);
             storage.set(createdUser.id, createdUser);
             response.status(HttpStatus.CREATED).send({ id: createdUser.id });
         },
         update(request, response) {
             const { age, login, password } = request.body;
             const id = request.params.id;
+            let { groupId } = request.body;
             if (isUserExist(id)) {
-                const updatedUser = new User(login, password, age, id);
+                if (!groupId) {
+                    groupId = storage.get(id).groupId;
+                }
+                const updatedUser = new User(login, password, age, id, groupId);
                 storage.set(updatedUser.id, updatedUser);
                 response.status(HttpStatus.OK).send({ id: updatedUser.id });
             } else {
@@ -65,7 +69,10 @@ const Controller = {
         login(request, response) {
             const user = getUserByLogin(request.body.login);
             if (!user || user.password !== request.body.password) {
-                response.status(HttpStatus.FORBIDDEN).send({ success: false, message: Constants.ErrorMessages.BAD_CREDENTIALS });
+                response.status(HttpStatus.FORBIDDEN).send({
+                    success: false,
+                    message: Constants.ErrorMessages.BAD_CREDENTIALS
+                });
             } else {
                 Authentication.signToken(response, user);
             }

@@ -4,14 +4,16 @@ import { Constants } from '../utils/constants.js';
 
 const storage = new Map();
 
-function User(login, password, age, uid = uuid.v4(), userGroup) {
-    this.id = uid;
+function User(login, password, age, id = uuid.v4(), userGroup) {
+    this.id = id;
     this.login = login;
     this.password = password;
     this.age = age;
     this.isDeleted = false;
     if (!userGroup) {
         this.groupId = Constants.Configuration.Group.DEFAULT_ID;
+    } else {
+        this.groupId = userGroup;
     }
 }
 
