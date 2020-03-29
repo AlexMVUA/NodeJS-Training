@@ -14,7 +14,7 @@
     "task2-1b": "npm run build && nodemon --inspect ./dist/app2-1.js",
     "checkDist": "npm run build && eslint dist/** -c dist/.eslintrc",
     "check": "eslint src/**",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -30,7 +30,7 @@
     "eslint-plugin-node": "^11.0.0",
     "express": "^4.17.1",
     "express-joi-validation": "^4.0.3",
-    "jest": "^24.1",
+    "jest": "^24.5.0",
     "nodemon": "^2.0.2",
     "winston": "^3.2.1"
   },
