@@ -14,7 +14,8 @@ app.use(cors(Constants.Configuration.CORS_OPTIONS));
 
 app.use(logger);
 app.use('/users/', userRouter.router);
-//app.use(errorLogger);
+app.use('/userGroups/', userGroupRouter);
+app.use(errorLogger);
 
 app.use((err, req, res) =>
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(`${err} has occurred!`)

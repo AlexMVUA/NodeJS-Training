@@ -6,8 +6,8 @@ const userGroupRouter = express.Router();
 
 initUserGroups();
 
-userGroupRouter.get('/userGroup:id', (request, response) => Controller.userGroup.get(request, response));
+userGroupRouter.get('/group/:id', (request, response) => Controller.userGroup.get(request, response));
 
-userGroupRouter.get('/', (request, response) => Controller.userGroup.get(request, response));
+userGroupRouter.get('/', (request, response) => Controller.userGroup.getAll(request, response));
 
 export { userGroupRouter };

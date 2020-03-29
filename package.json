@@ -5,16 +5,16 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "babel tasks -d dist",
-    "task1-1": "nodemon ./tasks/app1-1.js",
-    "task1-2": "nodemon ./tasks/app1-2.js",
-    "task1-3": "nodemon --exec babel-node ./tasks/app1-3.js",
+    "build": "babel src -d dist",
+    "task1-1": "nodemon src/app1-1.js",
+    "task1-2": "nodemon src/app1-2.js",
+    "task1-3": "nodemon --exec babel-node src/app1-3.js",
     "task1-1b": "npm run build && nodemon ./dist/app1-1.js",
-    "task2-1": "nodemon --experimental-modules --inspect ./tasks/app2-1.js",
+    "task2-1": "nodemon --experimental-modules --inspect src/app2-1.js",
     "task2-1b": "npm run build && nodemon --inspect ./dist/app2-1.js",
     "checkDist": "npm run build && eslint dist/** -c dist/.eslintrc",
-    "check": "eslint tasks/**",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check": "eslint src/**",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +30,7 @@
     "eslint-plugin-node": "^11.0.0",
     "express": "^4.17.1",
     "express-joi-validation": "^4.0.3",
+    "jest": "^24.1",
     "nodemon": "^2.0.2",
     "winston": "^3.2.1"
   },

@@ -8,6 +8,8 @@ function UserGroup(id, name, permissions) {
     this.name = name;
     if (!permissions) {
         this.permissions = [];
+    } else {
+        this.permissions = permissions;
     }
 }
 

@@ -6,7 +6,7 @@ import { Authentication } from '../utils/auth.js';
 import { Constants } from '../utils/constants.js';
 
 
-export const Controller = {
+const Controller = {
     userGroup: {
         getAll(request, response) {
             response.status(HttpStatus.OK).send(JSON.stringify(getAllGroups()));
@@ -75,3 +75,5 @@ export const Controller = {
         }
     }
 };
+
+export { Controller };
