@@ -11,11 +11,9 @@ export const Constants = {
     },
     Configuration: {
         ERROR_FLAG: 777,
-        EXPIRATION_TIME_SECONDS: 20,
         CORS_OPTIONS: {
             origin: false
         },
-        PORT: 3000,
         Group: {
             DEFAULT_ID: 'default',
             ADMIN_ID: 'admin',

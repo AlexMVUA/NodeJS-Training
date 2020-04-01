@@ -1,3 +1,4 @@
+import config from 'dotenv/config.js'; // eslint-disable-line no-unused-vars
 import cors from 'cors';
 import express from 'express';
 import HttpStatus from 'http-status-codes';
@@ -7,7 +8,7 @@ import { logger, errorLogger } from './utils/logger.js';
 import { Constants } from './utils/constants.js';
 
 const app = express();
-app.listen(Constants.Configuration.PORT);
+app.listen(process.env.ENV_PORT);
 app.use(express.json());
 
 app.use(cors(Constants.Configuration.CORS_OPTIONS));

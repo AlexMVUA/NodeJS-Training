@@ -37,6 +37,7 @@
   "dependencies": {
     "@hapi/joi": "^17.1.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express-joi-validation": "^4.0.3",
     "express-winston": "^4.0.3",
     "http-status-codes": "^1.4.0",
