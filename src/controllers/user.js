@@ -1,11 +1,24 @@
 import HttpStatus from 'http-status-codes';
 import { getFilteredUsers, isUserExist, getUserByLogin, storage, User } from '../models/user.js';
+import { getUserGroupById, isUserGroupExist, getAllGroups } from '../models/userGroup.js';
 import { getLimit } from '../utils/util.js';
 import { Authentication } from '../utils/auth.js';
 import { Constants } from '../utils/constants.js';
 
 
-export const Controller = {
+const Controller = {
+    userGroup: {
+        getAll(request, response) {
+            response.status(HttpStatus.OK).send(JSON.stringify(getAllGroups()));
+        },
+        get(request, response) {
+            if (isUserGroupExist(request.params.id)) {
+                response.status(HttpStatus.OK).send(getUserGroupById(request.params.id));
+            } else {
+                response.status(HttpStatus.NOT_FOUND).send({ message: Constants.ErrorMessages.USER_GROUP_NOT_FOUND });
+            }
+        }
+    },
     user: {
         get(request, response) {
             if (isUserExist(request.params.id)) {
@@ -18,15 +31,19 @@ export const Controller = {
         },
         create(request, response) {
             const user = request.body;
-            const createdUser = new User(user.login, user.password, user.age);
+            const createdUser = new User(user.login, user.password, user.age, user.id);
             storage.set(createdUser.id, createdUser);
             response.status(HttpStatus.CREATED).send({ id: createdUser.id });
         },
         update(request, response) {
             const { age, login, password } = request.body;
             const id = request.params.id;
+            let { groupId } = request.body;
             if (isUserExist(id)) {
-                const updatedUser = new User(login, password, age, id);
+                if (!groupId) {
+                    groupId = storage.get(id).groupId;
+                }
+                const updatedUser = new User(login, password, age, id, groupId);
                 storage.set(updatedUser.id, updatedUser);
                 response.status(HttpStatus.OK).send({ id: updatedUser.id });
             } else {
@@ -52,7 +69,10 @@ export const Controller = {
         login(request, response) {
             const user = getUserByLogin(request.body.login);
             if (!user || user.password !== request.body.password) {
-                response.status(HttpStatus.FORBIDDEN).send({ success: false, message: Constants.ErrorMessages.BAD_CREDENTIALS });
+                response.status(HttpStatus.FORBIDDEN).send({
+                    success: false,
+                    message: Constants.ErrorMessages.BAD_CREDENTIALS
+                });
             } else {
                 Authentication.signToken(response, user);
             }
@@ -62,3 +82,5 @@ export const Controller = {
         }
     }
 };
+
+export { Controller };
